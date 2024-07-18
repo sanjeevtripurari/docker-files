@@ -140,11 +140,26 @@ $ docker ps -a
 CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS                          PORTS                    NAMES
 c9aad26ce792   bitnami/kafka:3.7    "/opt/bitnami/script…"   20 seconds ago   Up 19 seconds                   0.0.0.0:9092->9092/tcp   kafka-docker-kafka-1
 
+
+
+$ docker exec -it  kafka-docker-kafka-1 kafka-topics.sh  --bootstrap-server localhost:9092 --list
+__consumer_offsets
+solobyte-kafka-primer-topic
+test
+
+$ docker exec -it  kafka-docker-kafka-1 kafka-topics.sh  --bootstrap-server localhost:9092 --describe --topic test
+Topic: test     TopicId: H8nHQVwmQyCYYJ9HCgAJkg PartitionCount: 1       ReplicationFactor: 1    Configs:
+        Topic: test     Partition: 0    Leader: 0       Replicas: 0     Isr: 0
+
+
+$ docker exec -it  kafka-docker-kafka-1 kafka-topics.sh  --bootstrap-server localhost:9092 --describe --topic solobyte-kafka-primer-topic
+Topic: solobyte-kafka-primer-topic      TopicId: 2TKHP0ztQvaeBnZMJiF31Q PartitionCount: 1       ReplicationFactor: 1   Configs:
+        Topic: solobyte-kafka-primer-topic      Partition: 0    Leader: 0       Replicas: 0     Isr: 0
+
 ```
 
 
-bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand \
-    --group my-group \
-    --bootstrap-server localhost:9092 \
-    --describe
+$ docker exec -it  kafka-docker-kafka-1 kafka-topics.sh  --bootstrap-server localhost:9092 --describe --topic solobyte-kafka-primer-topic
+
+$ docker exec -it  kafka-docker-kafka-1 kafka-run-class.sh kafka.admin.ConsumerGroupCommand  --group my-group  --bootstrap-server localhost:9092  --describe
 	
